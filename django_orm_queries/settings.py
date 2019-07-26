@@ -78,8 +78,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'chinook',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'USER': 'adam',
+        # 'PORT': '5432',
     }
 }
 
