@@ -1,0 +1,73 @@
+
+0. This is required for all questions:
+
+from chinook.models import *
+
+
+
+
+1. Find the albums recorded by the artist Queen.
+
+queen = Artist.objects.get(name='Queen')
+
+Album.objects.filter(artist_id=queen.id)
+
+
+
+
+2. Count how many tracks belong to the media type "Protected MPEG-4 video file".
+
+protected = MediaType.objects.get(name='Protected MPEG-4 video file')
+
+tracks_protected = Track.objects.filter(media_type=protected.id)
+
+tracks_protected.count()
+
+
+
+
+3. Find the genre with the name "Hip Hop/Rap".
+
+hip_hop_rap = Genre.objects.get(name='Hip Hop/Rap')
+
+
+
+
+4. Count how many tracks belong to the "Hip Hop/Rap" genre
+
+hip_hop_rap = Genre.objects.get(name='Hip Hop/Rap')
+
+tracks_hip_hop_rap = Track.objects.filter(genre_id=hip_hop_rap.id)
+
+tracks_hip_hop_rap.count()
+
+
+
+
+5. Find the total amount of time required to listen to all the tracks in the database.
+
+from django.db.models import Sum
+
+Track.objects.aggregate(Sum('milliseconds'))
+
+
+
+
+
+
+6. Find the highest price of any track that has the media type "MPEG audio file".
+
+
+
+7. Find the name of the most expensive track that has the media type "MPEG audio file".
+
+
+
+8. Find the 2 oldest artists.
+
+
+
+9. Find the least expensive track that has the genre "Electronica/Dance".
+
+
+10. Find all "MPEG audio file" tracks in the genre "Electronica/Dance".
