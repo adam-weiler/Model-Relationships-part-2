@@ -1,141 +1,101 @@
-
-0. This is required for all questions:
-
-from chinook.models import *
-
-0: This is required for questions 5 to 9:
-from django.db.models import Max, Min, Sum
+from chinook.models import *  #This is required for all questions.
+from django.db.models import Max, Min, Sum  #This is required for questions 5 and 6.
 
 
 
 
 1. Find the albums recorded by the artist Queen.
 
-queen = Artist.objects.get(name='Queen')
+1A:
+Album.objects.filter(artist_id=Artist.objects.get(name='Queen').id)  #A list of 3 Albums
 
-Album.objects.filter(artist_id=queen.id)
-
-# Album.objects.filter(artist_id=Artist.objects.get(name='Queen').id)
-
+1B:
+queen = Artist.objects.get(name='Queen')  #Artist 51
+Album.objects.filter(artist_id=queen.id)  #A list of 3 Albums
 
 
 
 
 2. Count how many tracks belong to the media type "Protected MPEG-4 video file".
 
-protected = MediaType.objects.get(name='Protected MPEG-4 video file')
+protected = MediaType.objects.get(name='Protected MPEG-4 video file')  #Media Type 3
 
-tracks_protected = Track.objects.filter(media_type=protected.id)
+tracks_protected = Track.objects.filter(media_type=protected.id)  #A list of 214 tracks
 
-tracks_protected.count()
+tracks_protected.count()  #214
 
 
 
 
 3. Find the genre with the name "Hip Hop/Rap".
 
-hip_hop_rap = Genre.objects.get(name='Hip Hop/Rap')
+Genre.objects.get(name='Hip Hop/Rap')  #Genre 17
 
 
 
 
 4. Count how many tracks belong to the "Hip Hop/Rap" genre
 
-hip_hop_rap = Genre.objects.get(name='Hip Hop/Rap')
+hip_hop_rap = Genre.objects.get(name='Hip Hop/Rap')  #Genre 17
 
-tracks_hip_hop_rap = Track.objects.filter(genre_id=hip_hop_rap.id)
+tracks_hip_hop_rap = Track.objects.filter(genre_id=hip_hop_rap.id)  #A list of 35 tracks
 
-tracks_hip_hop_rap.count()
+tracks_hip_hop_rap.count()  #35
 
 
 
 
 5. Find the total amount of time required to listen to all the tracks in the database.
 
-Track.objects.aggregate(Sum('milliseconds'))
+Track.objects.aggregate(Sum('milliseconds')) #{'milliseconds__sum': 1377942652}
 
 
 
 
 6. Find the highest price of any track that has the media type "MPEG audio file".
 
-mpeg = MediaType.objects.get(name='MPEG audio file') #MediaType 1
+mpeg = MediaType.objects.get(name='MPEG audio file')  #MediaType 1
 
-tracks_mpeg = Track.objects.filter(media_type=mpeg.id) #A list of tracks
+tracks_mpeg = Track.objects.filter(media_type=mpeg.id)  #A list of 3033 tracks
 
-highest_price = tracks_mpeg.aggregate(Max('unit_price')) #{'unit_price__max': Decimal('0.99')}
+tracks_mpeg.aggregate(Max('unit_price'))  #{'unit_price__max': Decimal('0.99')}
 
 
 
 
 7. Find the name of the most expensive track that has the media type "MPEG audio file".
 
-mpeg = MediaType.objects.get(name='MPEG audio file') #MediaType 1
+mpeg = MediaType.objects.get(name='MPEG audio file')  #MediaType 1
 
-tracks_mpeg = Track.objects.filter(media_type=mpeg.id) #A list of tracks
+tracks_mpeg = Track.objects.filter(media_type=mpeg.id)  #A list of 3033 tracks
 
-highest_price = tracks_mpeg.aggregate(Max('unit_price')) #{'unit_price__max': Decimal('0.99')}
-
-    ## expensive_track = Track.objects.filter(unit_price=highest_price)
-
-    # # track_highest_price = tracks_mpeg(unit_price=highest_price)
-
-    Track.objects.filter(unit_price=highest_price['unit_price__max'])[0] #Track 4
+tracks_mpeg.order_by('-unit_price')[0]  #Track 6
 
 
 
 
 8. Find the 2 oldest artists.
 
-    artists_ages = Artist.objects.filter(created_at)
-
-    c reated_at
-
-
-    artists_ages = Artist.objects.all(created_at)
-
-    tracks_mpeg = Track.objects.filter(media_type=mpeg.id)
-
-    highest_price = tracks_mpeg.aggregate(Max('unit_price'))
-
-
-
-    artists_ages = Artist.objects.aggregate(Max('created_at')) #Oldest artist.
-
-
-    Artist.objects.count()
-
-    Artist.objects.annotate(num_authors=Count('created_at')).order_by('num_authors')
-
-    Artist.objects.filter(Max('created_at')).count()
-
-
-all_artists = Artist.objects.order_by('created_at')[0:2] #Artists 258 and 31
+Artist.objects.order_by('created_at')[0:2]  #Artists 258 and 31
 
 
 
 
 9. Find the least expensive track that has the genre "Electronica/Dance".
 
-electronica_dance = Genre.objects.get(name='Electronica/Dance') #Genre 15
+electronica_dance = Genre.objects.get(name='Electronica/Dance')  #Genre 15
 
-tracks_electronica_dance = Track.objects.filter(genre_id=electronica_dance.id) #A list of tracks
+tracks_electronica_dance = Track.objects.filter(genre_id=electronica_dance.id)  #A list of 28 tracks
 
-    tracks_mpeg = Track.objects.filter(media_type=mpeg.id)
+tracks_electronica_dance.order_by('unit_price')[0]  #Track 3319
 
-    highest_price = tracks_mpeg.aggregate(Max('unit_price'))
-
-lowest_price = tracks_electronica_dance.aggregate(Min('unit_price')) #{'unit_price__max': Decimal('0.99')}
-
-
-Track.objects.filter(unit_price=lowest_price['unit_price__min'])[0] #
 
 
 
 10. Find all "MPEG audio file" tracks in the genre "Electronica/Dance".
 
-mpeg = MediaType.objects.get(name='MPEG audio file') #Media Type 1
+mpeg = MediaType.objects.get(name='MPEG audio file')  #Media Type 1
 
-electronica_dance = Genre.objects.get(name='Electronica/Dance') #Genre 15
+electronica_dance = Genre.objects.get(name='Electronica/Dance')  #Genre 15
 
-tracks_electronica_dance = Track.objects.filter(media_type=mpeg.id).filter(genre_id=electronica_dance.id) #28 
+Track.objects.filter(media_type=mpeg.id).filter(genre_id=electronica_dance.id)  #28 
