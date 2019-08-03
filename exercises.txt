@@ -7,11 +7,11 @@ from django.db.models import Max, Min, Sum  #This is required for questions 5 an
 1. Find the album titled "Vinicius De Moraes", and then use the relationship-provided method to find all its tracks.
 
 1A:
-Track.objects.filter(album=Album.objects.get(title='Vinicius De Moraes'))
+Track.objects.filter(album=Album.objects.get(title='Vinicius De Moraes'))  #A list of 17 tracks
 
 1B:
-VDM = Album.objects.get(title='Vinicius De Moraes')
-Track.objects.filter(album=VDM)
+VDM = Album.objects.get(title='Vinicius De Moraes')  #Album 243
+Track.objects.filter(album=VDM)  #A list of 17 tracks
 
 
 
@@ -19,11 +19,11 @@ Track.objects.filter(album=VDM)
 2. Find the artist called "Philip Glass Ensemble", and then use an relationship-provided method to find all their albums.
 
 2A:
-Album.objects.filter(artist=Artist.objects.get(name='Philip Glass Ensemble'))
+Album.objects.filter(artist=Artist.objects.get(name='Philip Glass Ensemble'))  #Album 343
 
 2B:
-PGE = Artist.objects.get(name='Philip Glass Ensemble')
-Album.objects.filter(artist=PGE)
+PGE = Artist.objects.get(name='Philip Glass Ensemble')  #Artist 275
+Album.objects.filter(artist=PGE)  #Album 343
 
 
 
@@ -31,10 +31,11 @@ Album.objects.filter(artist=PGE)
 3. Find the "Brazilian Music" playlist and then use an relationship-provided method to find all its tracks.
 
 3A:
-a
+Track.objects.filter(playlists=Playlist.objects.get(name='Brazilian Music'))  #A list of 38 tracks
 
 3B:
-b
+brazil = Playlist.objects.get(name='Brazilian Music')  #Playlist 11
+Track.objects.filter(playlists=brazil)  #A list of 38 tracks
 
 
 
@@ -42,10 +43,11 @@ b
 4. Find the "Jazz" genre and then use an relationship-provided method to find all its tracks.
 
 4A:
-a
+Track.objects.filter(genre=Genre.objects.get(name='Jazz'))  #A list of 130 tracks
 
 4B:
-b
+jazz = Genre.objects.get(name='Jazz')  #Genre 2
+Track.objects.filter(genre=jazz)  #A list of 130 tracks
 
 
 
@@ -53,10 +55,11 @@ b
 5. Find the track "My Time After Awhile" and then use the track/genre relationship to find its genre.
 
 5A:
-a
+Genre.objects.filter(genre_tracks=Track.objects.get(name='My Time After Awhile'))  #Genre 6
 
 5B:
-b
+MTAA = Track.objects.get(name='My Time After Awhile')  #A list of 202 tracks
+Genre.objects.filter(genre_tracks=MTAA)  #Genre 6
 
 
 
@@ -64,10 +67,11 @@ b
 6. Now find the media type of that same track.
 
 6A:
-a
+MediaType.objects.filter(mediatype_tracks=Track.objects.get(name='My Time After Awhile'))  #Media type 1
 
 6B:
-b
+MTAA = Track.objects.get(name='My Time After Awhile')  #A list of 202 tracks
+MediaType.objects.filter(mediatype_tracks=MTAA)  #Media type 1
 
 
 
@@ -75,7 +79,8 @@ b
 7. And finally, find the album that track appears on.
 
 7A:
-a
+Album.objects.filter(album_tracks=Track.objects.get(name='My Time After Awhile'))  #Album 20
 
 7B:
-b
+MTAA = Track.objects.get(name='My Time After Awhile')  #A list of 202 tracks
+Album.objects.filter(album_tracks=MTAA)  #Album 20
