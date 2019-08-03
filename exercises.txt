@@ -4,98 +4,78 @@ from django.db.models import Max, Min, Sum  #This is required for questions 5 an
 
 
 
-1. Find the albums recorded by the artist Queen.
+1. Find the album titled "Vinicius De Moraes", and then use the relationship-provided method to find all its tracks.
 
 1A:
-Album.objects.filter(artist_id=Artist.objects.get(name='Queen').id)  #A list of 3 Albums
+Track.objects.filter(album=Album.objects.get(title='Vinicius De Moraes'))
 
 1B:
-queen = Artist.objects.get(name='Queen')  #Artist 51
-Album.objects.filter(artist_id=queen.id)  #A list of 3 Albums
+VDM = Album.objects.get(title='Vinicius De Moraes')
+Track.objects.filter(album=VDM)
 
 
 
 
-2. Count how many tracks belong to the media type "Protected MPEG-4 video file".
+2. Find the artist called "Philip Glass Ensemble", and then use an relationship-provided method to find all their albums.
 
-protected = MediaType.objects.get(name='Protected MPEG-4 video file')  #Media Type 3
+2A:
+Album.objects.filter(artist=Artist.objects.get(name='Philip Glass Ensemble'))
 
-tracks_protected = Track.objects.filter(media_type=protected.id)  #A list of 214 tracks
-
-tracks_protected.count()  #214
-
-
-
-
-3. Find the genre with the name "Hip Hop/Rap".
-
-Genre.objects.get(name='Hip Hop/Rap')  #Genre 17
+2B:
+PGE = Artist.objects.get(name='Philip Glass Ensemble')
+Album.objects.filter(artist=PGE)
 
 
 
 
-4. Count how many tracks belong to the "Hip Hop/Rap" genre
+3. Find the "Brazilian Music" playlist and then use an relationship-provided method to find all its tracks.
 
-hip_hop_rap = Genre.objects.get(name='Hip Hop/Rap')  #Genre 17
+3A:
+a
 
-tracks_hip_hop_rap = Track.objects.filter(genre_id=hip_hop_rap.id)  #A list of 35 tracks
-
-tracks_hip_hop_rap.count()  #35
-
-
-
-
-5. Find the total amount of time required to listen to all the tracks in the database.
-
-Track.objects.aggregate(Sum('milliseconds')) #{'milliseconds__sum': 1377942652}
+3B:
+b
 
 
 
 
-6. Find the highest price of any track that has the media type "MPEG audio file".
+4. Find the "Jazz" genre and then use an relationship-provided method to find all its tracks.
 
-mpeg = MediaType.objects.get(name='MPEG audio file')  #MediaType 1
+4A:
+a
 
-tracks_mpeg = Track.objects.filter(media_type=mpeg.id)  #A list of 3033 tracks
-
-tracks_mpeg.aggregate(Max('unit_price'))  #{'unit_price__max': Decimal('0.99')}
-
-
-
-
-7. Find the name of the most expensive track that has the media type "MPEG audio file".
-
-mpeg = MediaType.objects.get(name='MPEG audio file')  #MediaType 1
-
-tracks_mpeg = Track.objects.filter(media_type=mpeg.id)  #A list of 3033 tracks
-
-tracks_mpeg.order_by('-unit_price')[0]  #Track 6
+4B:
+b
 
 
 
 
-8. Find the 2 oldest artists.
+5. Find the track "My Time After Awhile" and then use the track/genre relationship to find its genre.
 
-Artist.objects.order_by('created_at')[0:2]  #Artists 258 and 31
+5A:
+a
 
-
-
-
-9. Find the least expensive track that has the genre "Electronica/Dance".
-
-electronica_dance = Genre.objects.get(name='Electronica/Dance')  #Genre 15
-
-tracks_electronica_dance = Track.objects.filter(genre_id=electronica_dance.id)  #A list of 28 tracks
-
-tracks_electronica_dance.order_by('unit_price')[0]  #Track 3319
+5B:
+b
 
 
 
 
-10. Find all "MPEG audio file" tracks in the genre "Electronica/Dance".
+6. Now find the media type of that same track.
 
-mpeg = MediaType.objects.get(name='MPEG audio file')  #Media Type 1
+6A:
+a
 
-electronica_dance = Genre.objects.get(name='Electronica/Dance')  #Genre 15
+6B:
+b
 
-Track.objects.filter(media_type=mpeg.id).filter(genre_id=electronica_dance.id)  #28 
+
+
+
+7. And finally, find the album that track appears on.
+
+7A:
+a
+
+7B:
+b
